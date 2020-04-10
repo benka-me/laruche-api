@@ -24,5 +24,8 @@ protosetup:
   - larapi.proto
   - rpc-larapi.proto
 isgateway: true
-deps: []
-cons: []
+deps:
+  - benka-me/users
+  - benka-me/laruche-server
+cons:
+  - benka-me/laruche-hive

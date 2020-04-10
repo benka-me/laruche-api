@@ -3,11 +3,12 @@
 package rpc
 
 import (
-    "google.golang.org/grpc"
-	"strconv"
-	"github.com/benka-me/laruche/go-pkg/discover"
 	"fmt"
-
+	larsrv "github.com/benka-me/laruche-server/go-pkg/larsrv"
+	"github.com/benka-me/laruche/go-pkg/discover"
+	users "github.com/benka-me/users/go-pkg/users"
+	"google.golang.org/grpc"
+	"strconv"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -15,12 +16,38 @@ var _ = fmt.Sprintf("")
 var _ = strconv.FormatInt(int64(0), 10)
 
 type Clients struct {
-
+	Users         users.UsersClient
+	UsersGateway  users.UsersClient
+	Larsrv        larsrv.LarsrvClient
+	LarsrvGateway larsrv.LarsrvClient
 }
 
-func    InitClients(engine discover.Engine,  options ...grpc.DialOption) Clients {
+func InitClients(engine discover.Engine, options ...grpc.DialOption) Clients {
 
-    return Clients{
+	connUsers, err := engine.GrpcConn("benka-me/users", false, options...)
+	if err != nil {
+		panic("Cannot dial")
+	}
 
-    }
+	connUsersGateway, err := engine.GrpcConn("benka-me/users", true, options...)
+	if err != nil {
+		panic("Cannot dial")
+	}
+
+	connLarsrv, err := engine.GrpcConn("benka-me/laruche-server", false, options...)
+	if err != nil {
+		panic("Cannot dial")
+	}
+
+	connLarsrvGateway, err := engine.GrpcConn("benka-me/laruche-server", true, options...)
+	if err != nil {
+		panic("Cannot dial")
+	}
+
+	return Clients{
+		Users:         users.NewUsersClient(connUsers),
+		UsersGateway:  users.NewUsersClient(connUsersGateway),
+		Larsrv:        larsrv.NewLarsrvClient(connLarsrv),
+		LarsrvGateway: larsrv.NewLarsrvClient(connLarsrvGateway),
+	}
 }
