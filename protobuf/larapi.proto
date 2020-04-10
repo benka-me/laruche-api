@@ -1,0 +1,12 @@
+syntax = "proto3";
+package larapi;
+option go_package = "github.com/benka-me/laruche-api/go-pkg/larapi";
+
+message Request {
+    string Msg = 1;
+}
+
+message Greeting {
+    string Msg = 1;
+}
+

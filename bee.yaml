@@ -1,0 +1,28 @@
+name: laruche-api
+pkgname: larapi
+pkgnamecamel: Larapi
+repo: github.com/benka-me/laruche-api
+author: benka-me
+port: 8080
+public: false
+license: ""
+description: ""
+keywords: ""
+tag: ""
+devlang: 0
+languages:
+  go:
+    setup:
+      active: true
+      protocbinary: gogoslick
+  javascript:
+    setup:
+      active: true
+      protocbinary: ""
+protosetup:
+  files:
+  - larapi.proto
+  - rpc-larapi.proto
+isgateway: true
+deps: []
+cons: []

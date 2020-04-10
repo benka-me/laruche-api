@@ -1,0 +1,9 @@
+syntax = "proto3";
+package larapi;
+
+option go_package = "github.com/benka-me/laruche-api/go-pkg/larapi";
+import "larapi.proto";
+
+service Larapi {
+    rpc HelloWorld (larapi.Request) returns (larapi.Greeting);
+}
