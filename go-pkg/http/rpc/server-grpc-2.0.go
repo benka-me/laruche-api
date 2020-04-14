@@ -1,9 +1,9 @@
 package rpc
 
-//this is your entry point server, it will not be generated again.
 import (
 	"fmt"
 	"github.com/benka-me/laruche-api/go-pkg/larapi"
+	"github.com/benka-me/laruche-server/go-pkg/larsrv"
 	"github.com/benka-me/laruche/go-pkg/discover"
 	"github.com/benka-me/users/go-pkg/users"
 	"google.golang.org/grpc"
@@ -12,12 +12,9 @@ import (
 	"net"
 )
 
-// This structure will be passed to your handlers. Add everything you need inside.
 type App struct {
 	Clients
 }
-
-// your server port, don't change it unless you update the service on the hub.
 
 var grpcServer *grpc.Server
 
@@ -39,6 +36,7 @@ func Server_2_0(engine discover.Engine) {
 	}
 	{
 		larapi.RegisterLarapiServer(grpcServer, app) // Register your service server.
+		larsrv.RegisterLarsrvServer(grpcServer, app)
 		users.RegisterUsersServer(grpcServer, app)
 		reflection.Register(grpcServer)
 	}
